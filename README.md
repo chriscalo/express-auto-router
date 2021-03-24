@@ -32,7 +32,8 @@ npm install express-fs-autorouter
 ## Usage
 
 In your Express app, use `autoRouter()`, passing in an absolute path to the
-directory to search for `.js` handler files.
+directory to search for `.js` handler files. (If you pass no path, it will use
+`process.cwd()`.)
 
 ``` js
 const { resolve } = require("path");
