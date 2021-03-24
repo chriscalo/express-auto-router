@@ -1,7 +1,7 @@
 # express-fs-autorouter
 File-based auto routing for Express
 
-Given a directory of `.js` files:
+Given a directory (`api`) of `.js` files:
 
 ``` text
 /project
