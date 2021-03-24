@@ -1,3 +1,16 @@
 {
-  "name": "express-auto-router"
+  "name": "express-fs-autorouter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chriscalo/express-fs-autorouter"
+  },
+  "main": "index.js",
+  "author": {
+    "name": "Chris Calo",
+    "url": "https://github.com/chriscalo"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "globby": "^11.0.3"
+  }
 }

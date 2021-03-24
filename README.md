@@ -1,4 +1,4 @@
-# express-auto-router
+# express-fs-autorouter
 File-based auto routing for Express
 
 ## Installation
