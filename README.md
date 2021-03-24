@@ -1,7 +1,7 @@
 # express-fs-autorouter
 File-based auto routing for Express
 
-Given a directory (`api`) of `.js` files:
+Given a project directory of `.js` files like the following:
 
 ``` text
 /project
@@ -12,7 +12,8 @@ Given a directory (`api`) of `.js` files:
         └── index.js
 ```
 
-Creates an Express router to automatically map URL paths to corresponding files:
+Passing the `api` directory to `express-fs-autorouter` will create an Express
+router to automatically map URL paths to corresponding files:
 
 ``` text
 /           =>  api/index.js
@@ -56,7 +57,8 @@ module.exports = (req, res) => {
 };
 ```
 
-You can also export an `express()` instance, which has the same `(req, res, next)` signature:
+You can also export an `express()` instance, which has the same
+`(req, res, next)` signature:
 
 ``` js
 const express = require("express");
