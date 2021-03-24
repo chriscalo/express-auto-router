@@ -180,9 +180,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-auto-router@workspace:.":
+"express-fs-autorouter@workspace:.":
   version: 0.0.0-use.local
-  resolution: "express-auto-router@workspace:."
+  resolution: "express-fs-autorouter@workspace:."
   dependencies:
     express: ^4.17.1
     globby: ^11.0.3
