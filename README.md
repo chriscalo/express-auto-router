@@ -39,7 +39,6 @@ const express = require("express");
 const autoRouter = require("express-fs-autorouter");
 
 const app = express();
-app.enable("trust proxy");
 
 // auto-routing
 const apiDir = resolve(__dirname, "api");
