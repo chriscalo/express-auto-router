@@ -12,8 +12,7 @@ Given a directory of `.js` files:
         └── index.js
 ```
 
-Creates an Express router to automatically map the following URL paths to the
-corresponding files:
+Creates an Express router to automatically map URL paths to corresponding files:
 
 ``` text
 /           =>  api/index.js
