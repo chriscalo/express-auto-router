@@ -1,2 +1,2 @@
 # express-auto-router
-A file-based Express router
+File-based auto routing for Express
