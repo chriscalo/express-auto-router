@@ -56,7 +56,7 @@ module.exports = (req, res) => {
 };
 ```
 
-Or:
+You can also export an `express()` instance, which has the same `(req, res, next)` signature:
 
 ``` js
 const express = require("express");
