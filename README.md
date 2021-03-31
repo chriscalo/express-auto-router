@@ -69,6 +69,7 @@ module.exports = handler;
 
 handler
   .route("*")
+  // this example only handles GET requests
   .get((req, res) => {
     res.send("Hello, World!");
   });
