@@ -1,7 +1,6 @@
-const { join, parse, relative } = require("path");
+const { join, parse, relative, sep } = require("path");
 const globby = require("globby");
 const express = require("express");
-const UrlPattern = require("url-pattern");
 
 const defaults = {
   // rename to filePattern?
@@ -15,60 +14,88 @@ module.exports = function autoRouter(dir=process.cwd(), options) {
     ...options,
   };
   
-  // TODO: make this customizable
-  const urlPatternOptions = {
-    segmentNameStartChar: "$",
-  };
-  
   const pattern = join(dir, options.pattern);
   
   // FIXME: make this async
   const filePaths = globby.sync(pattern);
   
-  const router = express.Router();
-  configureRouter(router, filePaths);
-  return router;
+  const app = express();
+  configureApp(app, filePaths);
+  return app;
   
-  function browserPath(filePath) {
-    let browserPath = join("/", relative(dir, filePath));
-    const parsedBrowserPath = parse(browserPath);
-    
-    if (parsedBrowserPath.base === "index.js") {
-      browserPath = join(parsedBrowserPath.dir, "/");
-    } else {
-      browserPath = join(parsedBrowserPath.dir, parsedBrowserPath.name);
-    }
-    
-    const browserPathPattern = new UrlPattern(browserPath, urlPatternOptions);
-    return withOptionalTrailingSlash(browserPathPattern.regex);
-  }
-  
-  async function configureRouter(router, filePaths) {
+  async function configureApp(app, filePaths) {
     
     for (const filePath of filePaths) {
       const config = {
         filePath,
-        browserPath: browserPath(filePath),
+        browserPath: toBrowserPath(filePath, dir),
+        module: require(filePath),
       };
       
-      router.all(config.browserPath, function (req, res, next) {
-        const handler = require(filePath);
-        handler(req, res, next);
-      });
+      console.log(config);
+      
+      app.all(config.browserPath, config.module);
     }
     
   }
 };
 
-// takes a URL pattern matching regex and returns one where the trailing slash
-// has been made optional
-function withOptionalTrailingSlash(regex) {
-  const { source } = regex;
-  const trailingSlashPattern = /\\\/\$$/;
-  const optionalTrailingSlash = "\\\/?$";
-  const updatedSource = source.replace(
-    trailingSlashPattern,
-    optionalTrailingSlash,
-  );
-  return new RegExp(updatedSource);
+function toBrowserPath(filePath, dir) {
+  let browserPath = fileSystemToBrowserPath(filePath, dir);
+  debugger;
+  browserPath = toForwardSlashes(browserPath);
+  debugger;
+  browserPath = addRouteParams(browserPath);
+  debugger;
+  browserPath = removeIndexAndExtension(browserPath);
+  debugger;
+  
+  return browserPath;
+}
+
+function fileSystemToBrowserPath(filePath, root) {
+  const pathFromRootDirToFile = relative(root, filePath);
+  const absoluteBrowserPath = join("/", pathFromRootDirToFile);
+  return absoluteBrowserPath;
+}
+
+// force forward slashes because this is for a browser context
+function toForwardSlashes(path) {
+  return String(path).replace(/\\/g, "/");
+}
+
+function removeIndexAndExtension(path) {
+  const parsed = parse(path);
+  
+  if (parsed.base === "index.js") {
+    return join(parsed.dir, "/");
+  } else {
+    return join(parsed.dir, parsed.name);
+  }
+}
+
+function addRouteParams(path) {
+  const parsed = parse(path);
+  
+  parsed.dir = parsed.dir
+    .split("/")
+    .map(withRouteParams)
+    .join("/");
+  
+  return unparse(parsed);
+}
+
+function unparse(pathObject) {
+  return join(pathObject.dir, pathObject.base);
+}
+
+function withRouteParams(dir) {
+  const pattern = /\[(?<name>.*)\]/;
+  const match = pattern.exec(dir);
+  if (match) {
+    const { name } = match.groups;
+    return `:${name}`;
+  } else {
+    return dir;
+  }
 }
