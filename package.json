@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "globby": "^11.0.3"
+    "globby": "^11.0.3",
+    "url-pattern": "^1.0.3"
   }
 }

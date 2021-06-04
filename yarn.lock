@@ -186,6 +186,7 @@ __metadata:
   dependencies:
     express: ^4.17.1
     globby: ^11.0.3
+    url-pattern: ^1.0.3
   languageName: unknown
   linkType: soft
 
@@ -675,6 +676,13 @@ __metadata:
   version: 1.0.0
   resolution: "unpipe@npm:1.0.0"
   checksum: ba244e8bf640475b2143af95be5d71353cd4d238d63abf5dfe700c67841f066eb0819fc60dee7f2348ef647a5644a06ba024b9a0ab6d399fc07a05eb72a30ac7
+  languageName: node
+  linkType: hard
+
+"url-pattern@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "url-pattern@npm:1.0.3"
+  checksum: 55e1c22dbebfa67329e70159eda837b7c92df672ca4651931c1c9a205fde569b19656fbda35668eb2c0f0fab4c04f24af6850740092dc5d69eb897eeb439b000
   languageName: node
   linkType: hard
 
