@@ -10,15 +10,18 @@ Given a project directory of `.js` files like the following:
     ├── login.js
     └── accounts
         └── index.js
+        └── [id]
+            └── index.js
 ```
 
 Passing the `api` directory to `express-fs-autorouter` will create an Express
 router to automatically map URL paths to corresponding files:
 
 ``` text
-/           =>  api/index.js
-/login      =>  api/login.js
-/accounts/  =>  api/accounts/index.js
+/               =>  api/index.js
+/login          =>  api/login.js
+/accounts/      =>  api/accounts/index.js
+/accounts/:id/  =>  api/accounts/[id]/index.js
 ```
 
 ## Installation
@@ -58,8 +61,11 @@ module.exports = (req, res) => {
 };
 ```
 
-You can also export an `express()` instance, which has the same
-`(req, res, next)` signature:
+You can also export an `express()` subapp instance, which has the same
+`(req, res, next)` signature, but due to (how Express works)[express-bug], this
+will not work with parameterized folders like in `/accounts/[id]/index.js`:
+
+[express-bug]: https://github.com/expressjs/express/issues/696
 
 ``` js
 const express = require("express");
