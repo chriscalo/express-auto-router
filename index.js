@@ -32,8 +32,6 @@ module.exports = function autoRouter(dir=process.cwd(), options) {
         module: require(filePath),
       };
       
-      console.log(config);
-      
       app.all(config.browserPath, config.module);
     }
     
@@ -42,13 +40,9 @@ module.exports = function autoRouter(dir=process.cwd(), options) {
 
 function toBrowserPath(filePath, dir) {
   let browserPath = fileSystemToBrowserPath(filePath, dir);
-  debugger;
   browserPath = toForwardSlashes(browserPath);
-  debugger;
   browserPath = addRouteParams(browserPath);
-  debugger;
   browserPath = removeIndexAndExtension(browserPath);
-  debugger;
   
   return browserPath;
 }
