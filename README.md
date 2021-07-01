@@ -62,7 +62,7 @@ module.exports = (req, res) => {
 ```
 
 You can also export an `express()` subapp instance, which has the same
-`(req, res, next)` signature, but due to (how Express works)[express-bug], this
+`(req, res, next)` signature, but due to [how Express works][express-bug], this
 will not work with parameterized folders like in `/accounts/[id]/index.js`:
 
 [express-bug]: https://github.com/expressjs/express/issues/696
